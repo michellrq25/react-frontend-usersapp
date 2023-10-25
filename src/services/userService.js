@@ -1,4 +1,3 @@
-import axios from "axios"
 import usersApi from "../apis/usersApi";
 
 const BASE_URL = '';
@@ -6,6 +5,16 @@ const BASE_URL = '';
 export const findAll = async () => {
     try {
         const response = await usersApi.get(BASE_URL);
+        return response;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+export const findAllPages = async (page = 0) => {
+    try {
+        const response = await usersApi.get(`${BASE_URL}/page/${page}`);
         return response;
     } catch (error) {
         console.log(error);
@@ -40,7 +49,7 @@ export const update = async ({ id, username, email, admin }) => {
 
 export const remove = async (id) => {
     try {
-        await axios.delete(`${BASE_URL}/${id}`);
+        await usersApi.delete(`${BASE_URL}/${id}`);
     } catch (error) {
         throw error;
     }
